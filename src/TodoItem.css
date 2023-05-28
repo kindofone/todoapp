@@ -1,3 +1,9 @@
+.todo-item {
+  padding: 5px;
+  border: 1px solid gray;
+  border-collapse: collapse;
+}
+
 .completed {
   text-decoration: line-through;
   color: gray;

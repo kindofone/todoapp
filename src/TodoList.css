@@ -1,0 +1,12 @@
+.todo-list {
+  width: 300px;
+  border: 1px solid gray;
+}
+
+.new-todo-input {
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  padding: 0 5px;
+  outline: none;
+}

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './TodoItem.css';
 
-function TodoItem() {
-  const [text, setText] = useState("Take out the trash");
-  const [checked, setChecked] = useState(false);
+function TodoItem({text, isChecked}) {
+  const [checked, setChecked] = useState(isChecked);
+
   const onCheckboxClick = () => {
     setChecked(!checked);
   }
