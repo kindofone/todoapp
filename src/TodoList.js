@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoItem from './TodoItem';
 import './TodoList.css';
 
 function TodoList() {
+  const [numberOfIncompleteItems, setNumberOfIncompleteItems] = useState(0);
   const [items, setItems] = useState([
     {
       text: "Take out the trash",
-      isChecked: false,
+      completed: false,
     }, 
     {
       text: "Walk the dog",
-      isChecked: true,
+      completed: true,
     },
     ]);
   const [newTodoText, setNewTodoText] = useState("");
@@ -19,15 +20,38 @@ function TodoList() {
     if (key === "Enter" && newTodoText.trim() !== "") {
       setItems([...items, {
         text: newTodoText,
-        isChecked: false,
+        completed: false,
       }]);
       setNewTodoText("");
     }
   };
 
+  const onCompletedChanged = (text, completed) => {
+    setItems([...items.map((item) => {
+      if (item.text === text) {
+        return {
+          ...item,
+          completed,
+        };
+      }
+
+      return item;
+    })]);
+  };
+
   const onNewTodoInputChange = ({target}) => {
     setNewTodoText(target.value);
   };
+
+  useEffect(() => {
+    let count = 0;
+    for (let i = 0; i < items.length; i++) {
+      if (!items[i].completed) {
+        count++;
+      }
+    }
+    setNumberOfIncompleteItems(count);
+  }, [items]);
 
   return (
     <div className='todo-list'>
@@ -39,7 +63,15 @@ function TodoList() {
         onChange={onNewTodoInputChange}
         value={newTodoText}
       />
-      {items.map(({text, isChecked}) => <TodoItem key={text} text={text} isChecked={isChecked} />)} 
+      {items.map(({text, completed}) => (
+        <TodoItem 
+          key={text} 
+          text={text} 
+          completed={completed}
+          onCompletedChanged={onCompletedChanged} 
+        />
+      ))} 
+      {`${numberOfIncompleteItems} items left`}
     </div>
   )
 }

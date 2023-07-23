@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import './TodoItem.css';
 
-function TodoItem({text, isChecked}) {
-  const [checked, setChecked] = useState(isChecked);
+function TodoItem({text, completed, onCompletedChanged}) {
+  const [checked, setChecked] = useState(completed);
 
   const onCheckboxClick = () => {
     setChecked(!checked);
+    onCompletedChanged(text, !checked);
   }
 
   return (
